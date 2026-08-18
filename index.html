@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 3 Revision: Emails, Layout and Details</title>
+<style>
+:root{
+  --navy:#0b2e4f;
+  --teal:#0f7d7d;
+  --teal-dark:#0b5f5f;
+  --amber:#c97a1a;
+  --amber-tint:#fdf3e0;
+  --teal-tint:#e4f2f2;
+  --green:#1c7a3e;
+  --green-tint:#e7f4ec;
+  --red:#b3261e;
+  --red-tint:#fbeceb;
+  --cream:#f6f2ea;
+  --card:#ffffff;
+  --line:#e3ddd0;
+  --grey:#5a6672;
+  --focus:#1a73b8;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--cream);
+  color:var(--navy);
+  font-family:"Segoe UI",Calibri,Arial,sans-serif;
+  font-size:19px;
+  line-height:1.5;
+  -webkit-text-size-adjust:100%;
+}
+body.big{font-size:23px;}
+button{font-family:inherit;font-size:1em;cursor:pointer;}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:40;
+  background:var(--navy);color:#fff;
+  display:flex;align-items:center;gap:10px;
+  padding:8px 12px;flex-wrap:wrap;
+}
+.tb-btn{
+  min-height:44px;min-width:44px;
+  background:rgba(255,255,255,.12);color:#fff;
+  border:2px solid rgba(255,255,255,.35);
+  border-radius:999px;padding:6px 16px;font-weight:600;
+}
+.tb-btn:hover{background:rgba(255,255,255,.24);}
+.tb-title{
+  flex:1 1 160px;font-weight:700;font-size:1.02em;
+  color:#f6d9ae;letter-spacing:.2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.counter{
+  background:#fff;color:var(--navy);
+  border-radius:999px;padding:6px 14px;font-weight:700;
+  font-family:Consolas,"Courier New",monospace;
+  min-height:36px;display:flex;align-items:center;
+}
+
+/* ---------- layout ---------- */
+.wrap{max-width:900px;margin:0 auto;padding:88px 16px 108px;}
+.navbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  background:#fff;border-top:2px solid var(--line);
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;
+}
+.nav-tip{flex:1 1 auto;color:var(--grey);font-size:.86em;}
+.nav-btn{
+  min-height:44px;border-radius:999px;padding:8px 22px;
+  border:2px solid var(--teal);background:#fff;color:var(--teal-dark);font-weight:700;
+}
+.nav-btn.primary{background:var(--teal);color:#fff;}
+.nav-btn[disabled]{opacity:.4;cursor:not-allowed;}
+
+/* ---------- menu ---------- */
+.hero{margin-bottom:22px;}
+.eyebrow{
+  color:var(--amber);font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;font-size:.72em;margin-bottom:6px;
+}
+h1{font-size:1.7em;margin:0 0 8px;line-height:1.2;}
+.sub{color:var(--grey);margin:0 0 4px;}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.mcard{
+  text-align:left;background:var(--card);border:2px solid var(--line);
+  border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start;
+  width:100%;min-height:44px;
+}
+.mcard:hover{border-color:var(--teal);}
+.mcard .ic{font-size:1.6em;line-height:1;}
+.mcard .step{
+  color:var(--amber);font-weight:700;font-size:.72em;
+  letter-spacing:1.4px;text-transform:uppercase;
+}
+.mcard .mt{font-weight:700;display:block;margin:2px 0 4px;}
+.mcard .md{color:var(--grey);font-size:.88em;display:block;}
+.mcard .sc{
+  margin-top:8px;display:inline-block;font-size:.8em;font-weight:700;
+  background:var(--teal-tint);color:var(--teal-dark);
+  border-radius:999px;padding:3px 12px;
+}
+.mcard.done{border-color:var(--green);}
+.mcard.done .sc{background:var(--green-tint);color:var(--green);}
+
+/* ---------- round header ---------- */
+.rhead{
+  background:var(--navy);color:#fff;border-radius:16px;
+  padding:16px 18px;margin-bottom:16px;
+}
+.rhead h2{margin:0 0 6px;font-size:1.22em;}
+.rhead p{margin:0;color:#dbe7f0;font-size:.92em;}
+.live{
+  display:inline-block;margin-top:10px;background:#fff;color:var(--navy);
+  border-radius:999px;padding:4px 14px;font-weight:700;font-size:.86em;
+  font-family:Consolas,"Courier New",monospace;
+}
+
+/* ---------- item card ---------- */
+.card{
+  background:var(--card);border:2px solid var(--line);border-radius:16px;
+  padding:16px;margin-bottom:14px;
+}
+.chead{display:flex;gap:10px;align-items:center;margin-bottom:8px;flex-wrap:wrap;}
+.num{
+  background:var(--navy);color:#fff;border-radius:10px;
+  min-width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.9em;
+}
+.tag{
+  background:var(--amber-tint);color:var(--amber);border:1px solid #eccf9f;
+  border-radius:999px;padding:2px 12px;font-size:.74em;font-weight:700;
+  letter-spacing:.6px;text-transform:uppercase;
+}
+.q{font-weight:600;margin:6px 0 12px;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{
+  text-align:left;background:#fff;border:2px solid var(--line);
+  border-radius:999px;padding:11px 18px;min-height:44px;color:var(--navy);
+}
+.opt:hover{border-color:var(--teal);}
+.opt.right{background:var(--green-tint);border-color:var(--green);font-weight:700;}
+.opt.wrong{background:var(--red-tint);border-color:var(--red);}
+.opt[disabled]{cursor:default;}
+.opt.dim{opacity:.55;}
+.fb{border-radius:12px;padding:11px 14px;margin-top:12px;font-size:.94em;}
+.fb.good{background:var(--green-tint);border:2px solid var(--green);}
+.fb.bad{background:var(--red-tint);border:2px solid var(--red);}
+.fb.info{background:var(--teal-tint);border:2px solid var(--teal);}
+.fb b{display:block;margin-bottom:2px;}
+.hintbtn{
+  background:#fff;border:2px solid var(--teal);color:var(--teal-dark);
+  border-radius:999px;width:44px;height:44px;font-weight:800;
+}
+.hintbox{
+  background:var(--teal-tint);border:2px solid var(--teal);border-radius:12px;
+  padding:10px 14px;margin-top:10px;font-size:.92em;
+}
+.checkbtn{
+  background:var(--teal);color:#fff;border:2px solid var(--teal);
+  border-radius:999px;padding:10px 24px;min-height:44px;font-weight:700;margin-top:12px;
+}
+.retry{
+  background:#fff;border:2px solid var(--amber);color:var(--amber);
+  border-radius:999px;padding:10px 22px;min-height:44px;font-weight:700;margin:6px 0 4px;
+}
+
+/* ---------- mockups ---------- */
+.mock{margin:12px 0;font-size:.94em;}
+.em{border:2px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;}
+.em-bar{background:var(--navy);color:#fff;padding:8px 14px;font-weight:700;font-size:.84em;letter-spacing:1px;}
+.em-row{display:flex;border-bottom:1px solid var(--line);}
+.em-lab{
+  background:#f5f7f9;color:var(--grey);font-weight:700;font-size:.82em;
+  padding:8px 10px;min-width:88px;border-right:1px solid var(--line);
+}
+.em-val{padding:8px 10px;flex:1;word-break:break-word;}
+.em-body{padding:14px;}
+.em-body p{margin:0 0 9px;}
+.em-body p:last-child{margin-bottom:0;}
+
+.sms{border:2px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;max-width:460px;}
+.sms-bar{background:var(--navy);color:#fff;padding:8px 12px;display:flex;align-items:center;gap:10px;}
+.av{width:38px;height:38px;border-radius:50%;background:var(--teal);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.86em;}
+.av.biz{background:var(--amber);}
+.sms-name{font-weight:700;font-size:.92em;}
+.sms-sub{font-size:.74em;color:#cddced;}
+.sms-body{padding:12px;background:#eef1f4;}
+.bub{background:#fff;border-radius:14px;padding:10px 13px;margin-bottom:8px;max-width:88%;
+  border:1px solid var(--line);}
+.bub.me{background:var(--teal);color:#fff;margin-left:auto;border-color:var(--teal);}
+.bub .tm{display:block;font-size:.72em;color:var(--grey);margin-top:4px;}
+.bub.me .tm{color:#d7efef;}
+
+.notice{border:3px solid var(--amber);background:var(--amber-tint);border-radius:12px;padding:16px;text-align:center;}
+.notice h4{margin:0 0 8px;font-size:1.06em;letter-spacing:1px;text-transform:uppercase;}
+.notice p{margin:0 0 6px;}
+.notice .sig{font-size:.84em;color:var(--grey);margin-top:10px;}
+
+.doc{border:2px solid var(--line);border-radius:12px;background:#fff;padding:14px;}
+.doc .biz{font-weight:700;font-size:1.04em;}
+.doc .meta{color:var(--grey);font-size:.84em;margin-bottom:10px;}
+.doc table{width:100%;border-collapse:collapse;margin-bottom:8px;}
+.doc td{border-bottom:1px solid var(--line);padding:6px 4px;}
+.doc td.r{text-align:right;font-family:Consolas,"Courier New",monospace;}
+.doc .tot{font-weight:700;}
+.doc .stamp{
+  display:inline-block;margin-top:8px;border:2px solid var(--green);color:var(--green);
+  border-radius:8px;padding:3px 12px;font-weight:700;font-size:.82em;letter-spacing:1px;}
+.doc .due{
+  display:inline-block;margin-top:8px;border:2px solid var(--red);color:var(--red);
+  border-radius:8px;padding:3px 12px;font-weight:700;font-size:.82em;letter-spacing:1px;}
+
+.form{border:2px solid var(--line);border-radius:12px;background:#fff;padding:14px;}
+.form h4{margin:0 0 10px;font-size:1.02em;}
+.form .frow{display:flex;gap:8px;align-items:center;margin-bottom:9px;font-size:.94em;}
+.form .flab{min-width:118px;color:var(--grey);font-weight:700;font-size:.86em;}
+.form .fbox{flex:1;border:1px solid var(--grey);border-radius:6px;padding:6px 8px;background:#fbfbfb;min-height:30px;}
+.form .tick{width:20px;height:20px;border:2px solid var(--navy);border-radius:4px;display:inline-block;}
+
+.notif{background:#1c2430;color:#fff;border-radius:16px;padding:14px;max-width:420px;}
+.notif .app{font-size:.78em;color:#9fb3c8;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.notif .nt{font-weight:700;margin-bottom:4px;}
+.notif .tm{font-size:.76em;color:#9fb3c8;margin-top:6px;}
+
+.signwrap{display:flex;justify-content:center;padding:6px 0;}
+.sign{
+  width:170px;height:170px;border-radius:50%;border:14px solid var(--red);
+  background:#fff;display:flex;align-items:center;justify-content:center;
+  text-align:center;font-weight:800;padding:14px;line-height:1.2;
+}
+
+/* ---------- match ---------- */
+.matchwrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.matchwrap{grid-template-columns:1fr;}}
+.mcol h4{margin:0 0 8px;font-size:.82em;letter-spacing:1px;text-transform:uppercase;color:var(--grey);}
+.mbtn{
+  display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);
+  border-radius:12px;padding:11px 14px;margin-bottom:9px;min-height:44px;color:var(--navy);
+}
+.mbtn:hover{border-color:var(--teal);}
+.mbtn.sel{border-color:var(--amber);background:var(--amber-tint);font-weight:700;}
+.mbtn.paired{background:var(--green-tint);border-color:var(--green);opacity:.75;cursor:default;}
+.mbtn.miss{background:var(--red-tint);border-color:var(--red);}
+
+/* ---------- chips ---------- */
+.chipline{margin-bottom:6px;}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px;}
+.chip{
+  background:#fff;border:2px solid var(--line);border-radius:999px;
+  padding:9px 22px;min-height:44px;min-width:74px;font-weight:700;color:var(--navy);
+}
+.chip:hover{border-color:var(--teal);}
+.chip.right{background:var(--green-tint);border-color:var(--green);}
+.chip.wrong{background:var(--red-tint);border-color:var(--red);}
+
+/* ---------- word bank ---------- */
+.bank{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 16px;}
+.bw{
+  background:#fff;border:2px solid var(--teal);color:var(--teal-dark);
+  border-radius:999px;padding:8px 18px;min-height:44px;font-weight:700;
+}
+.bw.used{opacity:.35;cursor:default;}
+.gaptext p{margin:0 0 10px;}
+.gap{
+  display:inline-block;min-width:120px;min-height:44px;
+  border:2px dashed var(--grey);border-radius:10px;background:#fff;
+  padding:6px 12px;font-weight:700;color:var(--navy);vertical-align:middle;
+}
+.gap.sel{border-style:solid;border-color:var(--amber);background:var(--amber-tint);}
+.gap.right{border-style:solid;border-color:var(--green);background:var(--green-tint);}
+.gap.wrong{border-style:solid;border-color:var(--red);background:var(--red-tint);}
+
+/* ---------- typed ---------- */
+.ansrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.tin{
+  flex:1 1 210px;min-height:44px;font-family:inherit;font-size:1em;
+  border:2px solid var(--line);border-radius:12px;padding:9px 14px;background:#fff;color:var(--navy);
+}
+.tin:focus{border-color:var(--teal);}
+.tin.right{border-color:var(--green);background:var(--green-tint);}
+.tin.wrong{border-color:var(--red);background:var(--red-tint);}
+.mini{
+  background:var(--teal);color:#fff;border:2px solid var(--teal);
+  border-radius:999px;padding:8px 20px;min-height:44px;font-weight:700;
+}
+
+/* ---------- sort ---------- */
+.sortcard{
+  background:#fff;border:2px solid var(--line);border-radius:14px;
+  padding:14px;margin-bottom:12px;font-weight:600;
+}
+.bins{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+.bin{
+  flex:1 1 180px;min-height:44px;border-radius:999px;padding:11px 16px;font-weight:700;
+  border:2px solid var(--navy);background:#fff;color:var(--navy);
+}
+.bin:hover{background:var(--teal-tint);}
+.left{color:var(--grey);font-size:.86em;margin-bottom:8px;}
+
+/* ---------- order ---------- */
+.slots{border:2px solid var(--line);border-radius:14px;background:#fff;padding:12px;margin-bottom:12px;}
+.slot{
+  border:2px dashed var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;
+  min-height:44px;color:var(--grey);font-size:.94em;display:flex;align-items:center;gap:10px;
+}
+.slot .sn{font-weight:700;color:var(--navy);min-width:22px;}
+.slot.filled{border-style:solid;border-color:var(--green);background:var(--green-tint);color:var(--navy);}
+.slot.bad{border-style:solid;border-color:var(--red);background:var(--red-tint);color:var(--navy);}
+.pool{display:flex;flex-direction:column;gap:9px;}
+.pline{
+  text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;
+  padding:11px 14px;min-height:44px;color:var(--navy);
+}
+.pline:hover{border-color:var(--teal);}
+.pline.used{display:none;}
+
+/* ---------- hotspot ---------- */
+.lines{border:2px solid var(--line);border-radius:14px;background:#fff;padding:10px;}
+.hline{
+  display:block;width:100%;text-align:left;background:#fff;border:2px solid transparent;
+  border-bottom:1px solid var(--line);padding:11px 12px;min-height:44px;color:var(--navy);
+}
+.hline:last-child{border-bottom:2px solid transparent;}
+.hline:hover{background:#f5f7f9;}
+.hline.pick{background:var(--amber-tint);border-color:var(--amber);border-radius:10px;}
+.hline.ok{background:var(--green-tint);border-color:var(--green);border-radius:10px;}
+.hline.no{background:var(--red-tint);border-color:var(--red);border-radius:10px;}
+
+/* ---------- results ---------- */
+.res{background:#fff;border:2px solid var(--line);border-radius:18px;padding:22px;text-align:center;}
+.big{font-size:2.6em;font-weight:800;color:var(--teal);font-family:Consolas,"Courier New",monospace;}
+.stars{font-size:1.7em;letter-spacing:4px;margin:6px 0;}
+.brk{margin-top:18px;text-align:left;}
+.brow{display:flex;gap:10px;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--line);padding:9px 2px;}
+.brow .bn{font-weight:600;}
+.brow .bv{font-family:Consolas,"Courier New",monospace;font-weight:700;}
+.brow.weak .bv{color:var(--red);}
+.brow.strong .bv{color:var(--green);}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important;}
+}
+@media(max-width:420px){
+  .wrap{padding:96px 10px 108px;}
+  .tb-title{flex-basis:100%;order:5;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="tb-btn" id="menuBtn">Menu</button>
+  <span class="tb-title" id="barTitle">Session 3 Revision</span>
+  <span class="counter" id="counter">0 / 0</span>
+  <button class="tb-btn" id="bigBtn">Bigger text</button>
+  <button class="tb-btn" id="fsBtn">Full screen</button>
+</div>
+
+<main class="wrap" id="main"></main>
+
+<div class="navbar">
+  <span class="nav-tip" id="navTip">Choose a part to begin.</span>
+  <button class="nav-btn" id="backBtn">Back</button>
+  <button class="nav-btn primary" id="nextBtn">Next</button>
+</div>
+
+<script>
+/* ============================================================
+   MOCKUP BUILDERS
+   ============================================================ */
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function mockEmail(o){
+  var rows='';
+  rows+='<div class="em-row"><div class="em-lab">From</div><div class="em-val">'+esc(o.from)+'</div></div>';
+  if(o.to){rows+='<div class="em-row"><div class="em-lab">To</div><div class="em-val">'+esc(o.to)+'</div></div>';}
+  rows+='<div class="em-row"><div class="em-lab">Subject</div><div class="em-val">'+esc(o.subject)+'</div></div>';
+  if(o.date){rows+='<div class="em-row"><div class="em-lab">Date</div><div class="em-val">'+esc(o.date)+'</div></div>';}
+  var body=o.body.map(function(p){return '<p>'+esc(p)+'</p>';}).join('');
+  return '<div class="mock"><div class="em"><div class="em-bar">'+esc(o.box||'INBOX')+'</div>'+rows+
+         '<div class="em-body">'+body+'</div></div></div>';
+}
+
+function mockSms(o){
+  var b=o.msgs.map(function(m){
+    return '<div class="bub'+(m.me?' me':'')+'">'+esc(m.text)+'<span class="tm">'+esc(m.time||'')+'</span></div>';
+  }).join('');
+  return '<div class="mock"><div class="sms"><div class="sms-bar">'+
+    '<span class="av'+(o.biz?' biz':'')+'">'+esc(o.initials)+'</span>'+
+    '<span><span class="sms-name">'+esc(o.name)+'</span><br><span class="sms-sub">'+esc(o.sub||'')+'</span></span>'+
+    '</div><div class="sms-body">'+b+'</div></div></div>';
+}
+
+function mockNotice(o){
+  var p=o.lines.map(function(l){return '<p>'+esc(l)+'</p>';}).join('');
+  return '<div class="mock"><div class="notice"><h4>'+esc(o.title)+'</h4>'+p+
+    (o.sign?'<div class="sig">'+esc(o.sign)+'</div>':'')+'</div></div>';
+}
+
+function mockDoc(o){
+  var rows=o.rows.map(function(r){
+    return '<tr><td>'+esc(r[0])+'</td><td class="r">'+esc(r[1])+'</td></tr>';
+  }).join('');
+  var tot='<tr><td class="tot">'+esc(o.totalLabel||'Total')+'</td><td class="r tot">'+esc(o.total)+'</td></tr>';
+  var stamp=o.paid?'<span class="stamp">PAID</span>':'<span class="due">PLEASE PAY BY '+esc(o.due)+'</span>';
+  return '<div class="mock"><div class="doc"><div class="biz">'+esc(o.biz)+'</div>'+
+    '<div class="meta">'+esc(o.meta)+'</div><table>'+rows+tot+'</table>'+stamp+'</div></div>';
+}
+
+function mockForm(o){
+  var f=o.fields.map(function(x){
+    return '<div class="frow"><span class="flab">'+esc(x[0])+'</span><span class="fbox">'+esc(x[1]||'')+'</span></div>';
+  }).join('');
+  return '<div class="mock"><div class="form"><h4>'+esc(o.title)+'</h4>'+f+
+    '<div class="frow"><span class="tick"></span>&nbsp;'+esc(o.tick)+'</div></div></div>';
+}
+
+function mockNotif(o){
+  return '<div class="mock"><div class="notif"><div class="app">'+esc(o.app)+'</div>'+
+    '<div class="nt">'+esc(o.title)+'</div><div>'+esc(o.text)+'</div>'+
+    '<div class="tm">'+esc(o.time)+'</div></div></div>';
+}
+
+function mockSign(o){
+  return '<div class="mock"><div class="signwrap"><div class="sign">'+esc(o.text)+'</div></div></div>';
+}
+
+/* ============================================================
+   ROUND CONTENT
+   ============================================================ */
+
+/* ---- Round 1: match the email word to its meaning ---- */
+var R1 = [
+  {w:'inbox',        m:'the list of emails you have received'},
+  {w:'forward',      m:'to pass an email on to a different person'},
+  {w:'attachment',   m:'a file you send with your email'},
+  {w:'invoice',      m:'a bill that tells you how much money to pay'},
+  {w:'enquiry',      m:'a message you send to ask for information'},
+  {w:'identification',m:'something that shows who you are, such as a licence'}
+];
+
+/* ---- Round 2: what kind of text is this? ---- */
+var R2 = [
+  { mock: mockEmail({
+      from:'Ms Redmond <office@kogarahlearning.com.au>',
+      to:'tariq.haddad@email.com',
+      subject:'Your enrolment for Term 4',
+      date:'Wednesday 9 September, 11:05 am',
+      body:['Dear Tariq,','Your place in the Term 4 class is confirmed. Classes begin on Monday 12 October.',
+            'Kind regards,','Ms Redmond']}),
+    q:'What kind of text is this?',
+    opts:['Text message','Email','Notice','Invoice'], a:1,
+    why:'It has a From line, a To line and a subject line, and it opens with a greeting and ends with a closing and a name. That is an email.'},
+
+  { mock: mockSms({name:'Mai', sub:'mobile', initials:'M',
+      msgs:[{text:'Are you coming to class tonight? I can save you a seat.',time:'5:12 pm'},
+            {text:'Yes, I will be there at 6:30.',time:'5:14 pm',me:true}]}),
+    q:'What kind of text is this?',
+    opts:['Email','Notice','Text message','Form'], a:2,
+    why:'It is short, it is on a phone, there is no subject line and no closing. Two people are writing to each other quickly.'},
+
+  { mock: mockNotice({title:'Library closed for stocktake',
+      lines:['The library will be closed on Thursday 17 September.','It will open again at 9:00 am on Friday 18 September.',
+             'You can return books in the box at the front door.'],
+      sign:'Earlwood Library'}),
+    q:'What kind of text is this?',
+    opts:['Notice','Email','Receipt','Text message'], a:0,
+    why:'It is put on a wall or a door for many people. It is not sent to one person, and nobody is named at the top.'},
+
+  { mock: mockDoc({biz:'Carlton Car Care', meta:'Invoice 4471   |   Date: 3 September',
+      rows:[['New front tyre','$145.00'],['Wheel balance','$25.00']], total:'$170.00',
+      due:'17 SEPTEMBER'}),
+    q:'What kind of text is this?',
+    opts:['Receipt','Sign','Invoice','Email'], a:2,
+    why:'It shows money you still owe and the last day to pay it. An invoice asks for money. A receipt proves the money is already paid.'},
+
+  { mock: mockSign({text:'NO PARKING 8am - 6pm'}),
+    q:'What kind of text is this?',
+    opts:['Notice','Form','Text message','Sign'], a:3,
+    why:'Very few words, a strong shape and a strong colour. You read it in one second while you are walking or driving.'},
+
+  { mock: mockForm({title:'Swimming class booking',
+      fields:[['Family name',''],['First name',''],['Phone',''],['Class day','Monday / Thursday']],
+      tick:'I agree to the pool rules'}),
+    q:'What kind of text is this?',
+    opts:['Form','Invoice','Notification','Email'], a:0,
+    why:'It has empty boxes with labels next to them, and a box to tick. You write your own information in it.'},
+
+  { mock: mockNotif({app:'Delivery app', title:'Your parcel has arrived',
+      text:'Left at the front door. Tap to see the photo.', time:'Today, 2:41 pm'}),
+    q:'What kind of text is this?',
+    opts:['Email','A notification on a phone','Notice','Invoice'], a:1,
+    why:'It comes from an app on the phone screen. There is no greeting, no closing and no name, and you cannot write back to it.'},
+
+  { mock: mockDoc({biz:'Hurstville Aquatic Centre', meta:'Receipt 20918   |   Date: 1 September',
+      rows:[['Beginner swimming, 8 classes','$160.00'],['Deposit paid on 1 September','$40.00']],
+      totalLabel:'Still to pay', total:'$120.00', paid:true}),
+    q:'What kind of text is this?',
+    opts:['Invoice','Notice','Form','Receipt'], a:3,
+    why:'It shows money that has already been paid. Look for the word PAID and a receipt number.'},
+
+  { q:'You want to ask the college about the cost of a course. You need a few sentences, and you want the answer in writing. What do you write?',
+    opts:['A notice','An email','A sign','An invoice'], a:1,
+    why:'An email is best for an enquiry to an organisation. You can write full sentences, and you both keep a copy.'},
+
+  { q:'You are ten minutes late for class. You want to tell your classmate right now, in a few words. What do you send?',
+    opts:['An email with a subject line','A form','A text message','An invoice'], a:2,
+    why:'A text message is fast and short, and it is fine between friends and classmates. Keep the email for the office.'}
+];
+
+/* ---- Round 3: email layout ---- */
+var R3_LINES = [
+  {t:'To: bookings@hurstvilleaquatic.com.au', p:'To line'},
+  {t:'Subject: Question about the Saturday class', p:'Subject line'},
+  {t:'Dear Lucia,', p:'Greeting'},
+  {t:'My son is seven years old and he would like to learn to swim. Is there a place in the Saturday morning class?', p:'Body'},
+  {t:'Kind regards,', p:'Closing'},
+  {t:'Tariq Haddad', p:'Your name'}
+];
+var R3_POOL_ORDER = [3,0,4,2,5,1];
+
+var R3_MCQ = [
+  { mock: mockEmail({from:'tariq.haddad@email.com', to:'office@kogarahlearning.com.au',
+      subject:'(nothing written)',
+      body:['Dear Ms Redmond,','Could you please tell me the cost of the Term 4 class?','Kind regards,','Tariq Haddad']}),
+    q:'Which part of this email still needs work?',
+    opts:['The greeting','The closing','The subject line','The name'], a:2,
+    why:'The subject line is empty. The reader sees the subject first, so always write three to seven words there.'},
+  { q:'Where does your name go at the end of an email?',
+    opts:['On the same line as the closing','On the line under the closing','Before the greeting','Inside the subject line'], a:1,
+    why:'The closing and the name go on two separate lines. Write Kind regards, and then write your name underneath.'},
+  { q:'Which order is correct?',
+    opts:['Greeting, then subject, then body, then closing',
+          'Body, then greeting, then subject, then closing',
+          'Subject, then body, then greeting, then closing',
+          'Subject, then greeting, then body, then closing'], a:3,
+    why:'You write the subject line first, then the greeting, then the message itself, then the closing and your name.'}
+];
+
+/* ---- Round 4: in, on, at ---- */
+var R4 = [
+  {s:['The class starts ',' 6:30 pm.'], opts:['on','at','in'], a:1, why:'Use at for a clock time.'},
+  {s:['Our office is ',' Level 3, above the chemist.'], opts:['on','in','at'], a:0, why:'Use on for a floor and for a street name.'},
+  {s:['I will send the invoice ',' Friday morning.'], opts:['in','at','on'], a:2, why:'Use on when the day is named, even with morning: on Friday morning, but in the morning.'},
+  {s:['The learning centre is ',' Kogarah, near the station.'], opts:['at','in','on'], a:1, why:'Use in for a suburb, a city or a country.'},
+  {s:['Please wait ',' the front desk.'], opts:['at','on','in'], a:0, why:'Use at for a point or a place where you stand.'},
+  {s:['The new timetable starts ',' July.'], opts:['on','in','at'], a:1, why:'Use in for a month or a year.'},
+  {s:['The shop is ',' 42 Forest Road.'], opts:['in','on','at'], a:2, why:'Use at when there is a street number. Use on with the street name only.'},
+  {s:['We close early ',' Saturdays.'], opts:['on','at','in'], a:0, why:'Use on for a day, and for a day in the plural.'},
+  {s:['I put my certificate ',' the attachment.'], opts:['at','on','in'], a:2, why:'Use in for something inside something else.'},
+  {s:['My interview is ',' 12 October.'], opts:['in','on','at'], a:1, why:'Use on for a date.'}
+];
+
+/* ---- Round 5: joining words, word bank ---- */
+var R5_BANK = ['although','and','if','for example','when','but','so','or','because','after'];
+var R5_TEXT = [
+  ['My name is Tariq Haddad ', 0, ' I am in the Tuesday evening class.'],
+  ['I would like to change to the morning class, ', 1, ' my work hours changed last month.'],
+  ['I can come on Monday ', 2, ' Wednesday, ', 3, ' I cannot come on Friday.'],
+  ['', 4, ' there is no place in the morning class, please put my name on the waiting list.'],
+  ['I also need a letter for my employer, ', 5, ' could you please send one to my email?'],
+  ['', 6, ' I paid my fees in June, I have not received a receipt yet.'],
+  ['I can bring other papers, ', 7, ' my receipt from the office.']
+];
+var R5_ANS = [
+  {a:'and',        cap:false, why:'and adds one more idea.'},
+  {a:'because',    cap:false, why:'because gives the reason.'},
+  {a:'or',         cap:false, why:'or gives a choice between two things.'},
+  {a:'but',        cap:false, why:'but shows a difference.'},
+  {a:'if',         cap:true,  why:'if talks about a possible situation.'},
+  {a:'so',         cap:false, why:'so shows the result of the first idea.'},
+  {a:'although',   cap:true,  why:'although shows a surprise or a contrast.'},
+  {a:'for example',cap:false, why:'for example introduces one example.'}
+];
+
+/* ---- Round 6: read the email, type the answer ---- */
+var R6_EMAIL = mockEmail({
+  from:'Lucia Ferraro <bookings@hurstvilleaquatic.com.au>',
+  to:'tariq.haddad@email.com',
+  subject:'Your swimming lessons start on Monday 7 September',
+  date:'Tuesday 1 September, 2:40 pm',
+  body:[
+    'Dear Tariq,',
+    'Thank you for your booking. You now have a place in the beginner swimming class. The classes are on Monday and Thursday evenings at the Hurstville Aquatic Centre, 30 Park Road, Hurstville. The first class is on Monday 7 September. Classes start at 6:30 pm and finish at 7:15 pm.',
+    'Please arrive at 6:15 pm for the first class, because you need to sign the pool form at the front desk.',
+    'There are eight classes and the full cost is $160. You have paid a deposit of $40. The rest, $120, is due before the first class. You can pay online or at the front desk.',
+    'If you cannot come, please phone us on 5550 4182 before Friday 4 September. We can put you in the October group instead.',
+    'Kind regards,',
+    'Lucia Ferraro',
+    'Bookings Officer, Hurstville Aquatic Centre'
+  ]});
+
+var R6 = [
+  {q:'What time do the classes start?', ok:['630pm','630','1830','halfpastsix'], show:'6:30 pm',
+   hint:'Look for the small word at. It goes with a clock time.'},
+  {q:'What time must Tariq arrive for the first class?', ok:['615pm','615'], show:'6:15 pm',
+   hint:'He must arrive earlier than the start. Read the second paragraph.'},
+  {q:'Which street is the centre on? Write the street name.', ok:['parkroad','30parkroad','park'], show:'Park Road',
+   hint:'Look for the address in the first paragraph.'},
+  {q:'How much must he pay before the first class? Write the amount.', ok:['120','$120','120dollars'], show:'$120',
+   hint:'The whole course is $160 and he has already paid $40.'},
+  {q:'How many classes are there in total? Write the number.', ok:['8','eight'], show:'8',
+   hint:'Read the paragraph about money again.'},
+  {q:'What is the last day to phone about a change?', ok:['friday4september','4september','friday','fri4september','friday4sep','4sep','4sept','friday4sept'], show:'Friday 4 September',
+   hint:'Look for the word before in the last paragraph.'},
+  {q:'Which two evenings are the classes on?', ok:['mondayandthursday','mondaythursday','thursdayandmonday','mondayandthursdayevenings'], show:'Monday and Thursday',
+   hint:'The days are in the first paragraph, joined by the word and.'},
+  {q:'Write one way that Tariq can pay.', ok:['online','atthefrontdesk','frontdesk','desk','onlineoratthefrontdesk','cardonline'], show:'online, or at the front desk',
+   hint:'There are two ways. You only need to write one of them.'}
+];
+
+/* ---- Round 7: subject lines ---- */
+var R7_SORT = [
+  {t:'Question about the Monday morning class', good:true,
+   why:'Short, and it says the topic. The reader knows what the email is about before opening it.'},
+  {t:'hi', good:false,
+   why:'It says nothing about the topic. The reader does not know why you are writing.'},
+  {t:'Change of address for my enrolment', good:true,
+   why:'Four words, and it names the exact topic. The office can send it to the right person.'},
+  {t:'PLEASE READ THIS NOW!!!', good:false,
+   why:'All capital letters look angry, and it still does not say the topic.'},
+  {t:'I am writing to ask about the swimming classes that start in September because I cannot come on Monday evening', good:false,
+   why:'That is the whole message, not a subject line. Keep it to three to seven words.'},
+  {t:'Invoice 4471: payment sent today', good:true,
+   why:'Short, and it gives the invoice number, so the office can find it quickly.'}
+];
+var R7_MCQ = [
+  {q:'You are writing to ask if there is a place in the Saturday class for your son. Which subject line is best?',
+   opts:['swimming','Question about a place in the Saturday class','HELLO I NEED HELP',
+         'I would like to ask you if there is a place in the Saturday morning class for my son'], a:1,
+   why:'It names the topic in six words. The first one is too short to be useful and the last one is the whole message.'},
+  {q:'You are writing to tell the office that your phone number has changed. Which subject line is best?',
+   opts:['New phone number for my enrolment','important','MY NUMBER CHANGED PLEASE UPDATE IT','hi it is me'], a:0,
+   why:'It says exactly what has changed and why the office needs to know. The others are vague or shouting.'}
+];
+
+/* ---- Round 8: find the problems ---- */
+var R8_LINES = [
+  {t:'Subject: (nothing written)', bad:true,  why:'There is no subject line. Always write one.'},
+  {t:'hey', bad:true,  why:'This greeting is too casual for the office, and it does not name the reader. Write Dear Ms Redmond,'},
+  {t:'I want to change my class to the morning.', bad:false, why:'This line is fine. It starts with a capital letter and ends with a full stop.'},
+  {t:'My name is Tariq Haddad and I am in the Tuesday evening class.', bad:false, why:'This line is fine. It says who is writing.'},
+  {t:'can you tell me if there is a place', bad:true,  why:'No capital letter at the start, and no question mark at the end.'},
+  {t:'I can come on monday or wednesday.', bad:true,  why:'Days of the week always need a capital letter: Monday, Wednesday.'},
+  {t:'Thank you for your help.', bad:false, why:'This line is fine, and it is polite.'},
+  {t:'Kind regards, Tariq Haddad', bad:true,  why:'The closing and the name must go on two separate lines, with the name underneath.'}
+];
+var R8_MCQ = [
+  {q:'How do you fix the line that says hey?',
+   opts:['HELLO','Dear Ms Redmond,','hey there','Ms'], a:1,
+   why:'Use Dear and the reader name for an email to an organisation.'},
+  {q:'How do you fix the last line?',
+   opts:['Kind regards Tariq Haddad','Regards Kind, Tariq','Tariq Haddad, Kind regards',
+         'Kind regards, on one line, then Tariq Haddad on the next line'], a:3,
+   why:'Two separate lines, with the comma after the closing and the name underneath.'},
+  {q:'Which subject line would you write for this email?',
+   opts:['Request to change to the morning class','no subject','CHANGE MY CLASS NOW',
+         'I want to change my class because my work hours changed last month'], a:0,
+   why:'Six words, normal letters, and it names the topic.'}
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+var ROUNDS = [
+  {n:1, ic:'\uD83D\uDD24', title:'Email words',        style:'Match the pairs',
+   desc:'Match each email word to its meaning.', total:6,  build:buildMatch},
+  {n:2, ic:'\uD83E\uDDFE', title:'What kind of text?', style:'Look and choose',
+   desc:'Look at each text and say what kind of text it is.', total:10, build:buildTypeId},
+  {n:3, ic:'\uD83D\uDCE7', title:'Email layout',       style:'Put it in order',
+   desc:'Build an email in the right order, then answer three questions.', total:4, build:buildLayout},
+  {n:4, ic:'\uD83D\uDD52', title:'In, on or at',       style:'Tap the word',
+   desc:'Choose the right small word for time and place.', total:10, build:buildChips},
+  {n:5, ic:'\uD83D\uDD17', title:'Joining words',      style:'Word bank',
+   desc:'Put the joining words into a whole email. Two words are not needed.', total:8, build:buildBank},
+  {n:6, ic:'\uD83D\uDD0E', title:'Find the details',   style:'Type the answer',
+   desc:'Read a new email and type the times, dates, places and money.', total:8, build:buildTyped},
+  {n:7, ic:'\u2712\uFE0F', title:'Subject lines',      style:'Sort into two groups',
+   desc:'Decide which subject lines work and which ones need fixing.', total:8, build:buildSubject},
+  {n:8, ic:'\uD83D\uDD8D\uFE0F', title:'Fix the email',style:'Tap the problems',
+   desc:'Find the five problems in a draft email, then fix them.', total:8, build:buildFix}
+];
+
+var TOTAL = ROUNDS.reduce(function(s,r){return s+r.total;},0);
+
+var state = {view:'menu', res:{}};
+
+var main    = document.getElementById('main');
+var barTitle= document.getElementById('barTitle');
+var counter = document.getElementById('counter');
+var navTip  = document.getElementById('navTip');
+var backBtn = document.getElementById('backBtn');
+var nextBtn = document.getElementById('nextBtn');
+
+function key(r,i){return 'r'+r+'-'+i;}
+function record(r,i,ok){ state.res[key(r,i)] = !!ok; updateCounter(); }
+function has(r,i){ return Object.prototype.hasOwnProperty.call(state.res,key(r,i)); }
+function roundStats(n){
+  var rd = ROUNDS[n-1], done=0, right=0;
+  for(var i=0;i<rd.total;i++){ if(has(n,i)){ done++; if(state.res[key(n,i)]) right++; } }
+  return {done:done, right:right, total:rd.total};
+}
+function clearRound(n){
+  var rd = ROUNDS[n-1];
+  for(var i=0;i<rd.total;i++){ delete state.res[key(n,i)]; }
+  updateCounter();
+}
+function answeredAll(){ return Object.keys(state.res).length; }
+function rightAll(){
+  var c=0; for(var k in state.res){ if(state.res[k]) c++; } return c;
+}
+function updateCounter(){
+  counter.textContent = answeredAll()+' / '+TOTAL;
+  if(typeof state.view === 'number'){
+    var st = roundStats(state.view);
+    var live = document.getElementById('liveScore');
+    if(live){ live.textContent = 'This part: '+st.right+' correct out of '+st.done+' answered'; }
+  }
+  var mc = document.getElementById('menuCards');
+  if(mc){ paintMenuCards(); }
+}
+
+function el(html){
+  var d = document.createElement('div');
+  d.innerHTML = html.trim();
+  return d.firstChild;
+}
+
+/* ---------- router ---------- */
+function go(v){ state.view = v; window.scrollTo(0,0); render(); }
+
+function render(){
+  main.innerHTML = '';
+  if(state.view === 'menu'){ renderMenu(); }
+  else if(state.view === 'results'){ renderResults(); }
+  else { renderRound(state.view); }
+  updateNav();
+  updateCounter();
+}
+
+function updateNav(){
+  var v = state.view;
+  if(v === 'menu'){
+    barTitle.textContent = 'Session 3 Revision';
+    backBtn.disabled = true;
+    nextBtn.disabled = false;
+    nextBtn.textContent = 'Start part 1';
+    navTip.textContent = 'Choose any part. You can do them in any order.';
+  } else if(v === 'results'){
+    barTitle.textContent = 'Your results';
+    backBtn.disabled = false;
+    nextBtn.disabled = false;
+    nextBtn.textContent = 'Menu';
+    navTip.textContent = 'Go back to any part to try it again.';
+  } else {
+    var rd = ROUNDS[v-1];
+    barTitle.textContent = 'Part '+rd.n+': '+rd.title;
+    backBtn.disabled = false;
+    nextBtn.disabled = false;
+    nextBtn.textContent = (v === ROUNDS.length) ? 'See results' : 'Next part';
+    navTip.textContent = rd.style;
+  }
+}
+
+backBtn.onclick = function(){
+  var v = state.view;
+  if(v === 'results'){ go(ROUNDS.length); }
+  else if(typeof v === 'number'){ go(v === 1 ? 'menu' : v-1); }
+};
+nextBtn.onclick = function(){
+  var v = state.view;
+  if(v === 'menu'){ go(1); }
+  else if(v === 'results'){ go('menu'); }
+  else if(v === ROUNDS.length){ go('results'); }
+  else { go(v+1); }
+};
+document.getElementById('menuBtn').onclick = function(){ go('menu'); };
+document.getElementById('bigBtn').onclick = function(){
+  document.body.classList.toggle('big');
+  this.textContent = document.body.classList.contains('big') ? 'Normal text' : 'Bigger text';
+};
+document.getElementById('fsBtn').onclick = function(){
+  if(document.fullscreenElement){ document.exitFullscreen(); }
+  else if(document.documentElement.requestFullscreen){ document.documentElement.requestFullscreen(); }
+};
+document.addEventListener('keydown', function(e){
+  var t = e.target && e.target.tagName;
+  if(t === 'INPUT' || t === 'TEXTAREA') return;
+  if(e.key === 'Escape'){ go('menu'); }
+  else if(e.key === 'ArrowRight'){ nextBtn.click(); }
+  else if(e.key === 'ArrowLeft'){ if(!backBtn.disabled) backBtn.click(); }
+});
+
+/* ---------- menu ---------- */
+function renderMenu(){
+  main.appendChild(el(
+    '<div class="hero">'+
+    '<div class="eyebrow">EAL Level 2 &nbsp;|&nbsp; Revision</div>'+
+    '<h1>Session 3 Revision: Emails, Layout and Details</h1>'+
+    '<p class="sub">Eight parts. Every part asks you in a different way: matching, choosing, ordering, typing, sorting and tapping.</p>'+
+    '<p class="sub">Part 2 shows you eight real texts. Your job is to say what kind of text each one is.</p>'+
+    '</div>'));
+  var grid = el('<div class="mgrid" id="menuCards"></div>');
+  ROUNDS.forEach(function(rd){
+    var b = document.createElement('button');
+    b.className = 'mcard';
+    b.dataset.round = rd.n;
+    b.innerHTML = '<span class="ic">'+rd.ic+'</span><span><span class="step">Part '+rd.n+' &middot; '+rd.style+'</span>'+
+      '<span class="mt">'+rd.title+'</span><span class="md">'+rd.desc+'</span>'+
+      '<span class="sc" data-score="'+rd.n+'"></span></span>';
+    b.onclick = function(){ go(rd.n); };
+    grid.appendChild(b);
+  });
+  main.appendChild(grid);
+  var rbtn = el('<button class="retry" style="margin-top:16px">See my results</button>');
+  rbtn.onclick = function(){ go('results'); };
+  main.appendChild(rbtn);
+  paintMenuCards();
+}
+function paintMenuCards(){
+  ROUNDS.forEach(function(rd){
+    var s = roundStats(rd.n);
+    var sp = document.querySelector('[data-score="'+rd.n+'"]');
+    if(!sp) return;
+    sp.textContent = s.done ? (s.right+' / '+s.total+' correct') : (s.total+' questions');
+    var card = sp.closest('.mcard');
+    if(card){ card.classList.toggle('done', s.done === s.total); }
+  });
+}
+
+/* ---------- round frame ---------- */
+function renderRound(n){
+  var rd = ROUNDS[n-1];
+  main.appendChild(el(
+    '<div class="rhead"><h2>Part '+rd.n+': '+rd.title+'</h2><p>'+rd.desc+'</p>'+
+    '<span class="live" id="liveScore">This part: 0 correct out of 0 answered</span></div>'));
+  var body = document.createElement('div');
+  body.id = 'roundBody';
+  main.appendChild(body);
+  rd.build(body, n);
+  var again = el('<button class="retry">Try this part again</button>');
+  again.onclick = function(){ clearRound(n); go(n); };
+  main.appendChild(again);
+}
+
+/* ---------- shared card helpers ---------- */
+function cardShell(num, tag, inner){
+  return el('<div class="card"><div class="chead"><span class="num">'+num+'</span>'+
+    '<span class="tag">'+tag+'</span></div>'+inner+'</div>');
+}
+function feedback(node, ok, why){
+  var old = node.querySelector('.fb');
+  if(old) old.remove();
+  var f = el('<div class="fb '+(ok?'good':'bad')+'"><b>'+(ok?'Correct.':'Not this time.')+'</b>'+why+'</div>');
+  node.appendChild(f);
+}
+
+/* ---------- 1. MATCH ---------- */
+function buildMatch(root, n){
+  var wOrder = [3,5,0,2,4,1];
+  var mOrder = [4,2,1,5,0,3];
+  var wrap = el('<div class="card"><div class="chead"><span class="tag">Tap a word, then tap its meaning</span></div>'+
+    '<div class="matchwrap"><div class="mcol" id="colW"><h4>Word</h4></div>'+
+    '<div class="mcol" id="colM"><h4>Meaning</h4></div></div></div>');
+  root.appendChild(wrap);
+  var colW = wrap.querySelector('#colW'), colM = wrap.querySelector('#colM');
+  var sel = null, tried = {};
+  wOrder.forEach(function(i){
+    var b = el('<button class="mbtn" data-i="'+i+'">'+R1[i].w+'</button>');
+    b.onclick = function(){
+      if(b.classList.contains('paired')) return;
+      colW.querySelectorAll('.mbtn').forEach(function(x){x.classList.remove('sel');});
+      b.classList.add('sel'); sel = b;
+    };
+    colW.appendChild(b);
+  });
+  mOrder.forEach(function(i){
+    var b = el('<button class="mbtn" data-i="'+i+'">'+R1[i].m+'</button>');
+    b.onclick = function(){
+      if(!sel || b.classList.contains('paired')) return;
+      var wi = parseInt(sel.dataset.i,10), mi = i;
+      if(wi === mi){
+        sel.classList.remove('sel'); sel.classList.add('paired');
+        b.classList.add('paired');
+        record(n, wi, tried[wi] !== true);
+        sel = null;
+      } else {
+        tried[wi] = true;
+        sel.classList.add('miss'); b.classList.add('miss');
+        var s = sel;
+        setTimeout(function(){ s.classList.remove('miss'); b.classList.remove('miss'); }, 700);
+      }
+    };
+    colM.appendChild(b);
+  });
+}
+
+/* ---------- generic MCQ list ---------- */
+function mcqCards(root, n, items, offset, tag){
+  items.forEach(function(it, idx){
+    var i = offset + idx;
+    var inner = (it.mock || '') + '<p class="q">'+it.q+'</p><div class="opts"></div>';
+    var card = cardShell(i+1, tag, inner);
+    var opts = card.querySelector('.opts');
+    it.opts.forEach(function(o, oi){
+      var b = el('<button class="opt"></button>');
+      b.textContent = o;
+      b.onclick = function(){
+        if(card.dataset.done) return;
+        card.dataset.done = '1';
+        var ok = (oi === it.a);
+        b.classList.add(ok ? 'right' : 'wrong');
+        opts.querySelectorAll('.opt').forEach(function(x, xi){
+          x.disabled = true;
+          if(xi === it.a) x.classList.add('right');
+          if(!x.classList.contains('right') && x !== b) x.classList.add('dim');
+        });
+        record(n, i, ok);
+        feedback(card, ok, it.why);
+      };
+      opts.appendChild(b);
+    });
+    root.appendChild(card);
+  });
+}
+
+/* ---------- 2. TEXT TYPE ---------- */
+function buildTypeId(root, n){
+  root.appendChild(el('<div class="fb info" style="margin:0 0 14px"><b>Before you start</b>'+
+    'Ask yourself three questions each time. Who wrote it? Who is it for, one person or everybody? '+
+    'Does it have a subject line, a greeting and a closing?</div>'));
+  mcqCards(root, n, R2, 0, 'What is it?');
+}
+
+/* ---------- 3. EMAIL LAYOUT ---------- */
+function buildLayout(root, n){
+  var card = el('<div class="card"><div class="chead"><span class="num">1</span>'+
+    '<span class="tag">Put it in order</span></div>'+
+    '<p class="q">Tap the six lines in the correct order to build the email.</p>'+
+    '<div class="slots" id="slots"></div><div class="pool" id="pool"></div></div>');
+  root.appendChild(card);
+  var slots = card.querySelector('#slots'), pool = card.querySelector('#pool');
+  var pos = 0, slipped = false;
+
+  function reset(){
+    pos = 0; slipped = false;
+    slots.innerHTML=''; pool.innerHTML='';
+    R3_LINES.forEach(function(l, i){
+      slots.appendChild(el('<div class="slot" data-s="'+i+'"><span class="sn">'+(i+1)+'</span><span>'+l.p+'</span></div>'));
+    });
+    R3_POOL_ORDER.forEach(function(i){
+      var b = el('<button class="pline" data-i="'+i+'"></button>');
+      b.textContent = R3_LINES[i].t;
+      b.onclick = function(){
+        if(pos >= R3_LINES.length) return;
+        var slot = slots.querySelector('[data-s="'+pos+'"]');
+        if(i === pos){
+          slot.classList.add('filled');
+          slot.innerHTML = '<span class="sn">'+(pos+1)+'</span><span>'+R3_LINES[i].t+'</span>';
+          b.classList.add('used');
+          pos++;
+          if(pos === R3_LINES.length){
+            record(n, 0, !slipped);
+            feedback(card, !slipped, slipped
+              ? 'The email is built now. The order is always: To, subject line, greeting, body, closing, and your name on the line underneath.'
+              : 'Every line in the right place first time. To, subject line, greeting, body, closing, then your name underneath.');
+          }
+        } else {
+          slipped = true;
+          slot.classList.add('bad');
+          setTimeout(function(){ slot.classList.remove('bad'); }, 600);
+        }
+      };
+      pool.appendChild(b);
+    });
+  }
+  reset();
+  var rb = el('<button class="retry">Start this one again</button>');
+  rb.onclick = function(){
+    delete state.res[key(n,0)];
+    var f = card.querySelector('.fb'); if(f) f.remove();
+    reset(); updateCounter();
+  };
+  card.appendChild(rb);
+
+  mcqCards(root, n, R3_MCQ, 1, 'Choose one');
+}
+
+/* ---------- 4. CHIPS ---------- */
+function buildChips(root, n){
+  R4.forEach(function(it, i){
+    var inner = '<p class="q chipline">'+it.s[0]+'<b>____________</b>'+it.s[1]+'</p><div class="chips"></div>';
+    var card = cardShell(i+1, 'Tap the word', inner);
+    var chips = card.querySelector('.chips');
+    it.opts.forEach(function(o, oi){
+      var b = el('<button class="chip"></button>');
+      b.textContent = o;
+      b.onclick = function(){
+        if(card.dataset.done) return;
+        card.dataset.done = '1';
+        var ok = (oi === it.a);
+        b.classList.add(ok ? 'right' : 'wrong');
+        chips.querySelectorAll('.chip').forEach(function(x, xi){
+          x.disabled = true;
+          if(xi === it.a) x.classList.add('right');
+        });
+        card.querySelector('.q').innerHTML = it.s[0]+'<b>'+it.opts[it.a]+'</b>'+it.s[1];
+        record(n, i, ok);
+        feedback(card, ok, it.why);
+      };
+      chips.appendChild(b);
+    });
+    root.appendChild(card);
+  });
+}
+
+/* ---------- 5. WORD BANK ---------- */
+function buildBank(root, n){
+  var card = el('<div class="card"><div class="chead"><span class="tag">Tap a gap, then tap a word</span></div>'+
+    '<div class="bank" id="bank"></div><div class="gaptext" id="gt"></div></div>');
+  root.appendChild(card);
+  var bank = card.querySelector('#bank'), gt = card.querySelector('#gt');
+  var filled = {}, selGap = null, graded = false;
+
+  gt.appendChild(el('<p><b>Dear Ms Redmond,</b></p>'));
+  R5_TEXT.forEach(function(parts){
+    var p = document.createElement('p');
+    parts.forEach(function(bit){
+      if(typeof bit === 'number'){
+        var g = el('<button class="gap" data-g="'+bit+'">?</button>');
+        g.onclick = function(){
+          if(graded) return;
+          if(filled[bit] !== undefined){
+            var w = filled[bit];
+            delete filled[bit];
+            g.textContent = '?';
+            bank.querySelector('[data-w="'+w+'"]').classList.remove('used');
+          }
+          gt.querySelectorAll('.gap').forEach(function(x){x.classList.remove('sel');});
+          g.classList.add('sel'); selGap = bit;
+        };
+        p.appendChild(g);
+      } else if(bit){
+        p.appendChild(document.createTextNode(bit));
+      }
+    });
+    gt.appendChild(p);
+  });
+  gt.appendChild(el('<p><b>Kind regards,</b><br><b>Tariq Haddad</b></p>'));
+
+  R5_BANK.forEach(function(w, wi){
+    var b = el('<button class="bw" data-w="'+wi+'"></button>');
+    b.textContent = w;
+    b.onclick = function(){
+      if(graded || b.classList.contains('used')) return;
+      var target = selGap;
+      if(target === null || filled[target] !== undefined){
+        target = null;
+        for(var i=0;i<R5_ANS.length;i++){ if(filled[i] === undefined){ target = i; break; } }
+      }
+      if(target === null) return;
+      filled[target] = wi;
+      var g = gt.querySelector('[data-g="'+target+'"]');
+      g.textContent = R5_ANS[target].cap ? (w.charAt(0).toUpperCase()+w.slice(1)) : w;
+      g.classList.remove('sel');
+      b.classList.add('used');
+      selGap = null;
+    };
+    bank.appendChild(b);
+  });
+
+  var check = el('<button class="checkbtn">Check my answers</button>');
+  check.onclick = function(){
+    if(graded) return;
+    var missing = false;
+    for(var i=0;i<R5_ANS.length;i++){ if(filled[i] === undefined) missing = true; }
+    if(missing){
+      var f = card.querySelector('.fb'); if(f) f.remove();
+      card.appendChild(el('<div class="fb info"><b>Not finished yet</b>Fill every gap, then check.</div>'));
+      return;
+    }
+    graded = true;
+    var right = 0, notes = [];
+    for(var i=0;i<R5_ANS.length;i++){
+      var chosen = R5_BANK[filled[i]];
+      var ok = (chosen === R5_ANS[i].a);
+      var g = gt.querySelector('[data-g="'+i+'"]');
+      g.classList.add(ok ? 'right' : 'wrong');
+      if(!ok){ g.textContent = R5_ANS[i].cap ? (R5_ANS[i].a.charAt(0).toUpperCase()+R5_ANS[i].a.slice(1)) : R5_ANS[i].a; }
+      record(n, i, ok);
+      if(ok){ right++; } else { notes.push('Gap '+(i+1)+': '+R5_ANS[i].a+'. '+R5_ANS[i].why); }
+    }
+    var f2 = card.querySelector('.fb'); if(f2) f2.remove();
+    var msg = notes.length ? notes.join('<br>') : 'Every joining word is in the right place.';
+    card.appendChild(el('<div class="fb '+(notes.length?'bad':'good')+'"><b>'+right+' correct out of 8</b>'+msg+'</div>'));
+    check.disabled = true;
+  };
+  card.appendChild(check);
+}
+
+/* ---------- 6. TYPED ANSWERS ---------- */
+function norm(s){ return String(s).toLowerCase().replace(/[^a-z0-9]/g,''); }
+function buildTyped(root, n){
+  root.appendChild(el('<div class="card"><div class="chead"><span class="tag">Read this email</span></div>'+R6_EMAIL+'</div>'));
+  R6.forEach(function(it, i){
+    var inner = '<p class="q">'+it.q+'</p><div class="ansrow">'+
+      '<input class="tin" type="text" autocomplete="off" placeholder="Type your answer">'+
+      '<button class="mini">Check</button>'+
+      '<button class="hintbtn" title="Hint">?</button></div>';
+    var card = cardShell(i+1, 'Type it', inner);
+    var input = card.querySelector('.tin');
+    var btn = card.querySelector('.mini');
+    var hb = card.querySelector('.hintbtn');
+    hb.onclick = function(){
+      if(card.querySelector('.hintbox')) return;
+      card.appendChild(el('<div class="hintbox"><b>Hint</b> '+it.hint+'</div>'));
+    };
+    function check(){
+      if(card.dataset.done) return;
+      var v = norm(input.value);
+      if(!v) return;
+      var ok = it.ok.some(function(a){ return norm(a) === v; });
+      card.dataset.done = '1';
+      input.classList.add(ok ? 'right' : 'wrong');
+      input.readOnly = true; btn.disabled = true;
+      record(n, i, ok);
+      feedback(card, ok, ok ? 'That matches the email.' : 'The email says: <b>'+it.show+'</b>');
+    }
+    btn.onclick = check;
+    input.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ check(); } });
+    root.appendChild(card);
+  });
+}
+
+/* ---------- 7. SUBJECT LINES ---------- */
+function buildSubject(root, n){
+  var card = el('<div class="card"><div class="chead"><span class="tag">Sort into two groups</span></div>'+
+    '<p class="left" id="left"></p><div id="cardArea"></div>'+
+    '<div class="bins"><button class="bin" data-g="1">Good subject line</button>'+
+    '<button class="bin" data-g="0">Needs fixing</button></div></div>');
+  root.appendChild(card);
+  var area = card.querySelector('#cardArea'), left = card.querySelector('#left');
+  var idx = 0;
+
+  function show(){
+    var f = card.querySelector('.fb'); if(f) f.remove();
+    if(idx >= R7_SORT.length){
+      area.innerHTML = '';
+      left.textContent = 'All six done.';
+      card.querySelectorAll('.bin').forEach(function(b){ b.disabled = true; b.style.opacity = .4; });
+      return;
+    }
+    left.textContent = 'Subject line '+(idx+1)+' of '+R7_SORT.length;
+    area.innerHTML = '';
+    area.appendChild(el('<div class="sortcard">Subject: '+R7_SORT[idx].t+'</div>'));
+  }
+  card.querySelectorAll('.bin').forEach(function(b){
+    b.onclick = function(){
+      if(idx >= R7_SORT.length) return;
+      var it = R7_SORT[idx];
+      var ok = ((b.dataset.g === '1') === it.good);
+      record(n, idx, ok);
+      var f = card.querySelector('.fb'); if(f) f.remove();
+      card.appendChild(el('<div class="fb '+(ok?'good':'bad')+'"><b>'+
+        (ok ? 'Correct.' : 'Not this time. This one '+(it.good?'works well.':'needs fixing.'))+'</b>'+it.why+'</div>'));
+      idx++;
+      setTimeout(show, 900);
+    };
+  });
+  show();
+
+  mcqCards(root, n, R7_MCQ, 6, 'Choose the best one');
+}
+
+/* ---------- 8. FIX THE EMAIL ---------- */
+function buildFix(root, n){
+  var card = el('<div class="card"><div class="chead"><span class="tag">Tap the problems</span></div>'+
+    '<p class="q">This is a draft email to the office. Five lines have a problem. Tap those five lines, then check.</p>'+
+    '<div class="lines" id="lines"></div></div>');
+  root.appendChild(card);
+  var box = card.querySelector('#lines');
+  var picked = {}, graded = false;
+
+  R8_LINES.forEach(function(l, i){
+    var b = el('<button class="hline" data-i="'+i+'"></button>');
+    b.textContent = l.t;
+    b.onclick = function(){
+      if(graded) return;
+      if(picked[i]){ delete picked[i]; b.classList.remove('pick'); }
+      else { picked[i] = true; b.classList.add('pick'); }
+    };
+    box.appendChild(b);
+  });
+
+  var check = el('<button class="checkbtn">Check the five problems</button>');
+  check.onclick = function(){
+    if(graded) return;
+    graded = true;
+    var found = 0, notes = [], badIdx = 0;
+    R8_LINES.forEach(function(l, i){
+      var b = box.querySelector('[data-i="'+i+'"]');
+      b.classList.remove('pick');
+      if(l.bad){
+        var got = !!picked[i];
+        b.classList.add(got ? 'ok' : 'no');
+        record(n, badIdx, got);
+        if(got){ found++; } else { notes.push('Missed: '+l.why); }
+        badIdx++;
+      } else if(picked[i]){
+        b.classList.add('no');
+        notes.push('That line is fine: '+l.why);
+      }
+    });
+    card.appendChild(el('<div class="fb '+(found===5?'good':'bad')+'"><b>You found '+found+' problems out of 5</b>'+
+      (notes.length ? notes.join('<br>') : 'Every problem found.')+'</div>'));
+    check.disabled = true;
+    var key2 = el('<div class="fb info"><b>The five problems</b>'+
+      R8_LINES.filter(function(l){return l.bad;}).map(function(l){return l.why;}).join('<br>')+'</div>');
+    card.appendChild(key2);
+  };
+  card.appendChild(check);
+
+  mcqCards(root, n, R8_MCQ, 5, 'Now fix it');
+}
+
+/* ---------- results ---------- */
+function renderResults(){
+  var right = rightAll(), done = answeredAll();
+  var pct = TOTAL ? Math.round(right / TOTAL * 100) : 0;
+  var stars = pct >= 90 ? 5 : pct >= 75 ? 4 : pct >= 60 ? 3 : pct >= 40 ? 2 : 1;
+  var band = pct >= 90 ? 'Excellent work. You are ready to write emails on your own.'
+           : pct >= 75 ? 'Very good. Look again at the parts with the lowest score.'
+           : pct >= 60 ? 'Good work. Try the weaker parts one more time.'
+           : pct >= 40 ? 'Keep going. Read the green boxes again, then try the parts again.'
+           : 'Do this revision again with a partner, and ask your teacher about the parts you find hard.';
+  var box = el('<div class="res"><div class="big">'+right+' / '+TOTAL+'</div>'+
+    '<div class="stars">'+ '\u2605'.repeat(stars) + '\u2606'.repeat(5-stars) +'</div>'+
+    '<p>'+band+'</p><p class="sub">You answered '+done+' of '+TOTAL+' questions.</p>'+
+    '<div class="brk" id="brk"></div></div>');
+  main.appendChild(box);
+  var brk = box.querySelector('#brk');
+  var weak = [];
+  ROUNDS.forEach(function(rd){
+    var s = roundStats(rd.n);
+    var cls = s.done === 0 ? '' : (s.right / rd.total >= 0.8 ? 'strong' : (s.right / rd.total < 0.6 ? 'weak' : ''));
+    if(cls === 'weak' || s.done === 0){ weak.push(rd); }
+    var row = el('<div class="brow '+cls+'"><span class="bn">Part '+rd.n+': '+rd.title+'</span>'+
+      '<span class="bv">'+s.right+' / '+rd.total+'</span></div>');
+    row.style.cursor = 'pointer';
+    row.onclick = function(){ go(rd.n); };
+    brk.appendChild(row);
+  });
+  if(weak.length){
+    main.appendChild(el('<div class="fb info" style="margin-top:16px"><b>Look at these again</b>'+
+      weak.map(function(w){return 'Part '+w.n+': '+w.title;}).join('<br>')+'</div>'));
+  }
+  var sa = el('<button class="retry" style="margin-top:16px">Start the whole revision again</button>');
+  sa.onclick = function(){ state.res = {}; go('menu'); };
+  main.appendChild(sa);
+}
+
+render();
+
+</script>
+</body>
+</html>
